@@ -1,0 +1,11 @@
+import pandas as pd
+
+# Load Excel log data (CSV/Excel file of user actions)
+df = pd.read_csv('user_logs.csv')  # Columns like: timestamp, action_type, target, context, label
+
+# Tokenize actions into sequences per session
+def tokenize_actions(df):
+    grouped = df.groupby('session_id')['action_type'].apply(list)
+    return grouped.tolist()
+
+sequences = tokenize_actions(df)
